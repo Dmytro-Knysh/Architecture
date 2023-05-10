@@ -1,13 +1,21 @@
+// !Додаємо для виведення
+const express = require('express')
+var app = express();
+var path = require('path');
+app.engine('ejs', require('ejs').__express);
 const City = require('../model/city.model');
-
-exports.findAll = function(req, res){
-    City.findAll(function(err,city){
+// Виведення всій інформації з таблиці
+exports.findAll = function (req, res) { 
+    City.findAll(function (err, tour) {
         console.log('controller')
-        if(err)
+        if (err)
             res.send(err);
-        res.send(city);
+        // !З'єднуємо з файлом виведення
+        res.render('city.ejs', { City: tour });
+        // res.send(departament);
+
     });
-};
+}
 
 exports.create = function(req,res){
     const new_city = new City(req.body);
@@ -19,7 +27,8 @@ exports.create = function(req,res){
         City.create(new_city, function(err,city){
             if(err)
                 res.send(err);
-            res.json({error:false, message:"city added successfully!", data:city});
+            //res.json({error:false, message:"city added successfully!", data:city});
+            res.redirect('/api/city');
         });
     }
 };
@@ -28,7 +37,8 @@ exports.findById = function(req,res){
     City.findById(req.params.id, function (err,city){
         if(err)
         res.send(err);
-    res.json(city);
+    //res.json(city);
+    res.render('city_edit.ejs',{City:city});
     });
 };
 
@@ -40,7 +50,8 @@ exports.update = function(req,res) {
         City.update(req.params.id, new City(req.body), function(err,city){
             if(err)
                 res.send(err);
-            res.json({error:false, message:'city successfully updated'})
+            res.redirect('/api/city');
+            //res.json({error:false, message:'city successfully updated'})
         })
     }
 };
@@ -50,6 +61,7 @@ exports.delete = function(req,res){
         console.log("HI" + req.params.id);
         if(err)
             res.send(err);
-        res.json({error: false, message: 'city successfully deleted'});
+        res.redirect('/api/city');
+        //res.json({error: false, message: 'city successfully deleted'});
     });
 };

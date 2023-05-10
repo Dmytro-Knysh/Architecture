@@ -8,8 +8,9 @@ router.post('/', clientController.create);
 
 router.get('/:id', clientController.findById);
 
-router.put('/:id', clientController.update);
+router.post('/put/:id', clientController.update)
 
-router.delete('/:id', clientController.delete);
+router.get('/delete/:id', clientController.delete);
+
 
 module.exports = router;

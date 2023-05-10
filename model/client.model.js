@@ -60,20 +60,6 @@ Client.update = function(id,cit, result){
         });
 };
 
-/*Extra.update = function(tur, result){
-    connection.query("UPDATE extra SET name = ?, price = ? WHERE extraId = ? ",
-    [tur.tourId, tur.price],
-    function (err, res){
-        if(err){
-            console.log("error: ", err);
-            result(err,null);
-        }
-        else{
-            result(null, res);
-        }
-    });
-};*/
-
 Client.delete = function(id, result) {
     connection.query("DELETE FROM clients WHERE clientId = ?", [id],
         function (err, res){

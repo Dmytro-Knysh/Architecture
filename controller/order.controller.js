@@ -1,11 +1,19 @@
+// !Додаємо для виведення
+const express = require('express')
+var app = express();
+var path = require('path');
+app.engine('ejs', require('ejs').__express);
 const Order = require('../model/order.model');
-
-exports.findAll = function(req, res){
-    Order.findAll(function(err,order){
+// Виведення всій інформації з таблиці
+exports.findAll = function (req, res) { 
+    Order.findAll(function (err, tour) {
         console.log('controller')
-        if(err)
+        if (err)
             res.send(err);
-        res.send(order);
+        // !З'єднуємо з файлом виведення
+        res.render('order.ejs', { Order: tour });
+        // res.send(departament);
+
     });
 };
 
@@ -19,7 +27,8 @@ exports.create = function(req,res){
         Order.create(new_order, function(err,order){
             if(err)
                 res.send(err);
-            res.json({error:false, message:"Order added successfully!", data:order});
+            //res.json({error:false, message:"Order added successfully!", data:order});
+            res.redirect('/api/order');
         });
     }
 };
@@ -28,7 +37,8 @@ exports.findById = function(req,res){
     Order.findById(req.params.id, function (err,order){
         if(err)
         res.send(err);
-    res.json(order);
+    //res.json(order);
+    res.render('order_edit.ejs',{Order:order});
     });
 };
 
@@ -40,7 +50,8 @@ exports.update = function(req,res) {
         Order.update(req.params.id, new Order(req.body),function(err,order){
             if(err)
                 res.send(err);
-            res.json({error:false, message:'order successfully updated'})
+            //res.json({error:false, message:'order successfully updated'});
+            res.redirect('/api/order');
         })
     }
 };
@@ -50,6 +61,7 @@ exports.delete = function(req,res){
         console.log("HI" + req.params.id);
         if(err)
             res.send(err);
-        res.json({error: false, message: 'Order successfully deleted'});
+        //res.json({error: false, message: 'Order successfully deleted'});
+        res.redirect('/api/order');
     });
 };

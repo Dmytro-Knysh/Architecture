@@ -6,6 +6,8 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+//!Щоб на сервері бачити усі рішення 
+app.use(express.static("."));
 
 const orderRoutes = require('./router/order.routes'); 
 const tourRoutes = require('./router/tour.routes'); 
@@ -14,7 +16,8 @@ const clientRoutes = require('./router/client.routes');
 const extraRoutes = require('./router/extra.routes');
 
 app.get('/', (req, res) => {
-    res.status(200).json("Сервер працює123");
+    //res.status(200).json("Сервер працює123");
+    res.render('index.ejs');
 });
 
 app.use('/api/order', orderRoutes);

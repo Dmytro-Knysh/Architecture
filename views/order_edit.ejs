@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     
+    <title>Редагування</title>
+</head>
+<body>
+    <h1 class="text-center">Редагування замовлення: ID: <%= Order[0].orderId%> , ID клієнта:  <%= Order[0].clientId%>, ID додаткових послуг:  <%= Order[0].extraId%>, Ціна: <%= Order[0].price%>, ID туру:   <%= Order[0].tourId%></h1>
+    <h1 class="text-center">Редагувати замовлення</h1>
+       <form action="" method="POST" class="text-center">       
+        <div class="mb-3">
+            <label class="form-label">
+                ID замовлення
+                <input type="number" placeholder="id" class="form-control" id="" name="orderId" min="1">
+            </label class="form-label">
+            <label class="form-label">
+                ID клієнта
+                <input type="number" class="form-control" placeholder="name" id="clientId" name="clientId">
+            </label>
+            <label>
+                ID додаткових послуг
+                <input type="number" class="form-control" placeholder="extraId" id="extraId" name="extraId">
+            </label>
+            <label>
+                Ціна
+                <input type="number" class="form-control" placeholder="price" id="price" name="price">
+            </label>
+            <label>
+                ID туру
+                <input type="number" class="form-control" placeholder="tourId " id="tourId " name="tourId">
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary" formaction="/api/order/put/<%= Order[0].orderId%>">
+            Редагувати</button> 
+    </form>
+     <a class="btn btn-info" href="/api/order">Повернутися</a>
+</body>
+</html>

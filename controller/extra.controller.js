@@ -1,13 +1,21 @@
+// !Додаємо для виведення
+const express = require('express')
+var app = express();
+var path = require('path');
+app.engine('ejs', require('ejs').__express);
 const Extra = require('../model/extra.model');
-
-exports.findAll = function(req, res){
-    Extra.findAll(function(err,extra){
+// Виведення всій інформації з таблиці
+exports.findAll = function (req, res) { 
+    Extra.findAll(function (err, extra) {
         console.log('controller')
-        if(err)
+        if (err)
             res.send(err);
-        res.send(extra);
+        // !З'єднуємо з файлом виведення
+        res.render('extra.ejs', { Extra: extra });
+        // res.send(departament);
+
     });
-};
+}
 
 exports.create = function(req,res){
     const new_extra = new Extra(req.body);
@@ -19,7 +27,8 @@ exports.create = function(req,res){
         Extra.create(new_extra, function(err,extra){
             if(err)
                 res.send(err);
-            res.json({error:false, message:"Extra added successfully!", data:extra});
+            //res.json({error:false, message:"Extra added successfully!", data:extra});
+            res.redirect('/api/extra');
         });
     }
 };
@@ -28,7 +37,8 @@ exports.findById = function(req,res){
     Extra.findById(req.params.id, function (err,extra){
         if(err)
         res.send(err);
-    res.json(extra);
+    //res.json(extra);
+    res.render('extra_edit.ejs',{Extra:extra});
     });
 };
 
@@ -40,7 +50,8 @@ exports.update = function(req,res) {
         Extra.update(req.params.id, new Extra(req.body), function(err,extra){
             if(err)
                 res.send(err);
-            res.json({error:false, message:'extra successfully updated'})
+            //res.json({error:false, message:'extra successfully updated'})
+            res.redirect('/api/extra');
         })
     }
 };
@@ -50,6 +61,7 @@ exports.delete = function(req,res){
         console.log("HI" + req.params.id);
         if(err)
             res.send(err);
-        res.json({error: false, message: 'Extra successfully deleted'});
+        //res.json({error: false, message: 'Extra successfully deleted'});
+        res.redirect('/api/extra');
     });
 };
